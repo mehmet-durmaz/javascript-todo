@@ -21,6 +21,7 @@ function addElement() {
     alert("boş girmeyin lütfen");
   } else {
     addElementToUI(newTodo);
+    addElementToStorage(newTodo);
   }
 }
 
@@ -54,4 +55,24 @@ for (let i = 0; i <= ullenght.length; i++) {
   removeItemButton[i].onclick = function () {
     this.parentElement.remove();
   };
+}
+
+//storage
+function startStorage(){
+  let todos;
+
+  if(localStorage.getItem("todos") === null){
+    todos = [];
+  } else{
+    todos = JSON.parse(localStorage.getItem("todos"))
+  }
+  return todos;
+}
+
+function addElementToStorage(newTodo){
+  let todos = startStorage();
+
+  todos.push(newTodo);
+
+  localStorage.setItem("todos",JSON.stringify(todos))
 }
