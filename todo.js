@@ -37,9 +37,7 @@ function addElementToUI(newTodo) {
   listItem.appendChild(deleteIcon);
 
   for (let i = 0; i <= ullenght.length; i++) {
-    removeItemButton[i].onclick = function () {
-      this.parentElement.remove();
-    };
+    removeItemButton[i].onclick = deleteElement;
   }
 }
 
@@ -51,28 +49,44 @@ for (let i = 0; i < ullenght.length; i++) {
 }
 
 //silme işlemi
+
 for (let i = 0; i <= ullenght.length; i++) {
-  removeItemButton[i].onclick = function () {
-    this.parentElement.remove();
-  };
+  removeItemButton[i].onclick = deleteElement;
 }
 
-//storage
-function startStorage(){
+// add storage
+function startStorage() {
   let todos;
 
-  if(localStorage.getItem("todos") === null){
+  if (localStorage.getItem("todos") === null) {
     todos = [];
-  } else{
-    todos = JSON.parse(localStorage.getItem("todos"))
+  } else {
+    todos = JSON.parse(localStorage.getItem("todos"));
   }
   return todos;
 }
 
-function addElementToStorage(newTodo){
+function addElementToStorage(newTodo) {
+  let todos = startStorage();
+  todos.push(newTodo);
+  localStorage.setItem("todos", JSON.stringify(todos));
+}
+//localStorage delete element
+function deleteStorage(inputElement) {
   let todos = startStorage();
 
-  todos.push(newTodo);
+  todos.forEach(function (todo, index) {
+    if (todo === inputElement) {
+      todos.splice(index, 1);
+    }
+  });
 
-  localStorage.setItem("todos",JSON.stringify(todos))
+  localStorage.setItem("todos", JSON.stringify(todos));
+}
+
+//delete
+function deleteElement(e) {
+  this.parentElement.remove();
+  let inputElement = e.target.parentElement.textContent;
+  deleteStorage(inputElement);
 }
