@@ -90,3 +90,13 @@ function deleteElement(e) {
   let inputElement = e.target.parentElement.textContent;
   deleteStorage(inputElement);
 }
+
+document.addEventListener("DOMContentLoaded", loadFromStorage)
+
+function loadFromStorage() {
+  let todos = startStorage();
+
+  todos.forEach(function (todo) {
+    addElementToUI(todo);
+  })
+}
